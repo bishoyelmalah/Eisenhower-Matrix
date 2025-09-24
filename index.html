@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eisenhower Matrix</title>
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.svg">
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 p-4 md:p-8">
+
+    <div class="max-w-screen-2xl mx-auto">
+        <!-- Header Section -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900">Eisenhower Matrix</h1>
+            <p class="mt-2 text-lg text-slate-600">Organize your tasks by urgency and importance.</p>
+        </header>
+
+        <!-- Input and Uncategorized Section (Centered) -->
+        <div class="w-full max-w-3xl mx-auto mb-10">
+            <div class="flex flex-col gap-8">
+                <!-- Task Input Section -->
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h2 class="text-xl font-semibold mb-3">Add a New Task</h2>
+                    <form id="task-form" class="flex flex-col gap-3">
+                        <input type="text" id="task-input" placeholder="e.g., Finish project proposal" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition" required>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="date" id="task-deadline" title="Add a deadline" class="flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                            <button type="submit" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200 shadow-md hover:shadow-lg sm:w-auto w-full">
+                                Add Task
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Uncategorized Tasks Section -->
+                <div id="uncategorized-container">
+                    <h3 class="text-lg font-semibold mb-2 text-center text-slate-700">New Tasks</h3>
+                    <p class="text-center text-slate-500 mb-4">Drag tasks from here to a quadrant.</p>
+                    <div id="uncategorized-tasks" class="task-container min-h-[100px] bg-slate-100 p-4 rounded-xl border-2 border-slate-200 transition-all duration-300 flex flex-wrap gap-3 justify-center">
+                        <!-- New tasks will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eisenhower Matrix -->
+        <div>
+            <!-- Eisenhower Matrix Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                
+                <!-- Quadrant 1: Urgent & Important -->
+                <div id="do-quadrant" class="quadrant bg-white rounded-xl shadow-md p-5 border-t-4 border-red-500">
+                    <h2 class="text-xl font-bold text-red-600">Urgent & Important</h2>
+                    <p class="text-sm text-slate-500 mb-4">Do First - Critical tasks to be done now.</p>
+                    <div id="do-tasks" class="task-container min-h-[200px] space-y-3 p-2 rounded-lg bg-red-50/50 transition-all duration-300 border-2 border-transparent">
+                    </div>
+                </div>
+                
+                <!-- Quadrant 2: Not Urgent & Important -->
+                <div id="schedule-quadrant" class="quadrant bg-white rounded-xl shadow-md p-5 border-t-4 border-blue-500">
+                    <h2 class="text-xl font-bold text-blue-600">Not Urgent & Important</h2>
+                    <p class="text-sm text-slate-500 mb-4">Schedule - Tasks for later strategic development.</p>
+                    <div id="schedule-tasks" class="task-container min-h-[200px] space-y-3 p-2 rounded-lg bg-blue-50/50 transition-all duration-300 border-2 border-transparent">
+                    </div>
+                </div>
+                
+                <!-- Quadrant 3: Urgent & Not Important -->
+                <div id="delegate-quadrant" class="quadrant bg-white rounded-xl shadow-md p-5 border-t-4 border-orange-500">
+                    <h2 class="text-xl font-bold text-orange-600">Urgent & Not Important</h2>
+                    <p class="text-sm text-slate-500 mb-4">Delegate - Tasks that can be offloaded.</p>
+                    <div id="delegate-tasks" class="task-container min-h-[200px] space-y-3 p-2 rounded-lg bg-orange-50/50 transition-all duration-300 border-2 border-transparent">
+                    </div>
+                </div>
+                
+                <!-- Quadrant 4: Not Urgent & Not Important -->
+                <div id="eliminate-quadrant" class="quadrant bg-white rounded-xl shadow-md p-5 border-t-4 border-slate-500">
+                    <h2 class="text-xl font-bold text-slate-600">Not Urgent & Not Important</h2>
+                    <p class="text-sm text-slate-500 mb-4">Eliminate - Distractions to be avoided.</p>
+                    <div id="eliminate-tasks" class="task-container min-h-[200px] space-y-3 p-2 rounded-lg bg-slate-50/50 transition-all duration-300 border-2 border-transparent">
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Details Modal -->
+    <div id="task-details-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 transition-opacity duration-300">
+        <div id="modal-content" class="bg-white rounded-xl shadow-2xl p-8 w-full max-w-lg relative transform scale-95 transition-transform duration-300">
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-3xl text-slate-500 hover:text-slate-800 font-light">&times;</button>
+            
+            <div class="flex items-center mb-4">
+                <span id="modal-quadrant-indicator" class="w-4 h-4 rounded-full mr-3"></span>
+                <p id="modal-quadrant" class="text-sm font-semibold uppercase tracking-wider text-slate-600">Quadrant</p>
+            </div>
+            
+            <h2 id="modal-title" class="text-2xl font-bold text-slate-900 mb-3 break-words modal-editable" title="Click to edit title">Task Title</h2>
+            
+            <p id="modal-deadline" class="text-slate-600 mb-5 modal-editable" title="Click to edit deadline">Deadline</p>
+            
+            <div>
+                <p class="font-semibold text-slate-800">Notes:</p>
+                <div id="modal-notes" class="mt-1 text-slate-700 bg-slate-50 p-3 rounded-md min-h-[60px] whitespace-pre-wrap break-words modal-editable" title="Click to edit notes">Notes will appear here...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
